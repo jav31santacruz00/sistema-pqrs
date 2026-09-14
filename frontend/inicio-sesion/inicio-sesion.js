@@ -5,6 +5,8 @@ formulario.addEventListener('submit', function (e) {
 
     const usuario = document.getElementById('usuario').value;
     const contrasenia = document.getElementById('contrasenia').value;
+    
+    if (usuario == '' || contrasenia == '') return alert('Ingrese las credenciales.');
 
     fetch("/autentificacion", {
         method: "POST",
@@ -13,7 +15,9 @@ formulario.addEventListener('submit', function (e) {
     })
     .then(respuesta => respuesta.json())
     .then(r => {
-        console.log(r);
+        if (!r.status) return alert(r.message);
+
+        window.location.href = "/panel";
     })
     .catch(error => {
         console.error("Error:", error);
