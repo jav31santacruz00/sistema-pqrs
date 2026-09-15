@@ -10,9 +10,9 @@ Permite registrar solicitudes, asignarlas al área correspondiente y realizar se
 **Gestión de proyecto:** Jira Software
 **Metodología:** Scrum / Agile  
 **Control de versiones:** Git & GitHub  
-**Base de datos:** MySQL
-**Frontend:**  
-**Backend:** 
+**Base de datos:** SQLite
+**Frontend:**  Bootstrap
+**Backend:** node + Express
 
 ## Integrantes
 
