@@ -1,1 +1,5 @@
 node_modules/
+# Base de datos SQLite local
+backend/database.sqlite
+*.sqlite
+*.sqlite3
