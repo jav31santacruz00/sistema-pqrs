@@ -30,7 +30,7 @@ function esCorreoValido(correo) {
 async function listarUsuarios() {
     const tabla = document.getElementById("tabla-usuarios");
     try {
-        const respuesta = await fetch("/api/listar-usuarios");
+        const respuesta = await fetch("/api/usuarios");
         const datos = await respuesta.json();
 
         tabla.innerHTML = "";
@@ -90,7 +90,6 @@ async function crearUsuario() {
     const contrasenia = document.getElementById("contrasenia").value.trim();
     const rol = document.getElementById("rol").value;
 
-    // Validaciones básicas
     if (!nombre || !apellido || !correo || !contrasenia) {
         mostrarAlerta("danger", "Por favor completa todos los campos obligatorios.", "alerta-modal-crear");
         return;
@@ -117,7 +116,7 @@ async function crearUsuario() {
     }
 
     try {
-        const respuesta = await fetch("/api/crear-usuario", {
+        const respuesta = await fetch("/api/usuarios", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, apellido, correo, contrasenia, rol })
@@ -152,7 +151,7 @@ async function abrirModalActualizar(id) {
     if (alertaModal) alertaModal.innerHTML = "";
 
     try {
-        const respuesta = await fetch(`/api/listar-usuarios/${id}`);
+        const respuesta = await fetch(`/api/usuarios/${id}`);
         const usuario = await respuesta.json();
 
         if (!usuario || usuario.status === false) {
@@ -185,7 +184,6 @@ async function actualizarUsuario() {
     const contrasenia = document.getElementById("contraseniaActualizar").value.trim();
     const rol = document.getElementById("rolActualizar").value;
 
-    // Validaciones básicas
     if (!nombre || !apellido || !correo || !contrasenia) {
         mostrarAlerta("danger", "Todos los campos son obligatorios.", "alerta-modal-actualizar");
         return;
@@ -207,7 +205,7 @@ async function actualizarUsuario() {
     }
 
     try {
-        const respuesta = await fetch(`/api/actualizar-usuario/${id}`, {
+        const respuesta = await fetch(`/api/usuarios/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, apellido, correo, contrasenia, rol })
@@ -246,7 +244,7 @@ async function eliminarUsuario(id, nombreCompleto) {
     }
 
     try {
-        const respuesta = await fetch(`/api/eliminar-usuario/${id}`, {
+        const respuesta = await fetch(`/api/usuarios/${id}`, {
             method: "DELETE"
         });
 

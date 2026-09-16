@@ -1,8 +1,4 @@
-const db = require('../database');
-
-/**
- * Servicio para la gestión de solicitudes en la base de datos
- */
+const db = require('../config/database');
 
 function obtenerSolicitudes() {
     return new Promise((resolve, reject) => {
@@ -14,7 +10,6 @@ function obtenerSolicitudes() {
     });
 }
 
-
 function crearSolicitud({ tipo, nombre, correo, asunto, descripcion }) {
     return new Promise((resolve, reject) => {
         const sql = "INSERT INTO solicitudes (tipo, nombre, correo, asunto, descripcion) VALUES (?, ?, ?, ?, ?)";
@@ -24,7 +19,6 @@ function crearSolicitud({ tipo, nombre, correo, asunto, descripcion }) {
         });
     });
 }
-
 
 function eliminarSolicitud(id) {
     return new Promise((resolve, reject) => {

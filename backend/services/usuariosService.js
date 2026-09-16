@@ -1,8 +1,4 @@
-const db = require('../database');
-
-/**
- * Servicio para la gestión de usuarios en la base de datos
- */
+const db = require('../config/database');
 
 function obtenerUsuarios() {
     return new Promise((resolve, reject) => {
