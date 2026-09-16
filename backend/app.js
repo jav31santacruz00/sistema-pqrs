@@ -198,6 +198,58 @@ app.get('/api/listar-usuarios/:id', async (req, res) => {
     }
 });
 
+app.delete('/api/eliminar-usuario/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const resultado = await usuariosService.eliminarUsuario(id);
+
+        if (resultado.changes === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        res.json({
+            status: true,
+            message: 'Usuario eliminado exitosamente',
+            changes: resultado.changes
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: false,
+            error: err.message
+        });
+    }
+});
+
+app.delete('/api/usuarios/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const resultado = await usuariosService.eliminarUsuario(id);
+
+        if (resultado.changes === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        res.json({
+            status: true,
+            message: 'Usuario eliminado exitosamente',
+            changes: resultado.changes
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: false,
+            error: err.message
+        });
+    }
+});
+
 // ==========================================
 // Inicialización del Servidor
 // ==========================================

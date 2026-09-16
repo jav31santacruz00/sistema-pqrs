@@ -56,9 +56,23 @@ function obtenerUsuarioPorId(id) {
     });
 }
 
+/**
+ * Eliminar un usuario por su ID
+ */
+function eliminarUsuario(id) {
+    return new Promise((resolve, reject) => {
+        const sql = `DELETE FROM usuarios WHERE id = ?`;
+        db.run(sql, [id], function (err) {
+            if (err) return reject(err);
+            resolve({ changes: this.changes });
+        });
+    });
+}
+
 module.exports = {
     obtenerUsuarios,
     crearUsuario,
     actualizarUsuario,
-    obtenerUsuarioPorId
+    obtenerUsuarioPorId,
+    eliminarUsuario
 };
