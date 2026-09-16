@@ -4,9 +4,6 @@ const db = require('../database');
  * Servicio para la gestión de usuarios en la base de datos
  */
 
-/**
- * Obtener la lista completa de usuarios
- */
 function obtenerUsuarios() {
     return new Promise((resolve, reject) => {
         const sql = "SELECT id, nombre, apellido, correo, contrasenia, rol FROM usuarios";
@@ -17,9 +14,6 @@ function obtenerUsuarios() {
     });
 }
 
-/**
- * Crear un nuevo usuario en la base de datos
- */
 function crearUsuario({ nombre, apellido, correo, contrasenia, rol }) {
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO usuarios (nombre, apellido, correo, contrasenia, rol) VALUES (?, ?, ?, ?, ?)`;
@@ -30,9 +24,6 @@ function crearUsuario({ nombre, apellido, correo, contrasenia, rol }) {
     });
 }
 
-/**
- * Actualizar los datos de un usuario por su ID
- */
 function actualizarUsuario(id, { nombre, apellido, correo, contrasenia, rol }) {
     return new Promise((resolve, reject) => {
         const sql = `UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, contrasenia = ?, rol = ? WHERE id = ?`;
@@ -43,9 +34,6 @@ function actualizarUsuario(id, { nombre, apellido, correo, contrasenia, rol }) {
     });
 }
 
-/**
- * Obtener un usuario por su ID
- */
 function obtenerUsuarioPorId(id) {
     return new Promise((resolve, reject) => {
         const sql = `SELECT id, nombre, apellido, correo, contrasenia, rol FROM usuarios WHERE id = ?`;
@@ -56,9 +44,6 @@ function obtenerUsuarioPorId(id) {
     });
 }
 
-/**
- * Eliminar un usuario por su ID
- */
 function eliminarUsuario(id) {
     return new Promise((resolve, reject) => {
         const sql = `DELETE FROM usuarios WHERE id = ?`;

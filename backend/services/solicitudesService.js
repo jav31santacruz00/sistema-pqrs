@@ -4,9 +4,6 @@ const db = require('../database');
  * Servicio para la gestión de solicitudes en la base de datos
  */
 
-/**
- * Obtener todas las solicitudes registradas
- */
 function obtenerSolicitudes() {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM solicitudes";
@@ -17,9 +14,7 @@ function obtenerSolicitudes() {
     });
 }
 
-/**
- * Crear una nueva solicitud
- */
+
 function crearSolicitud({ tipo, nombre, correo, asunto, descripcion }) {
     return new Promise((resolve, reject) => {
         const sql = "INSERT INTO solicitudes (tipo, nombre, correo, asunto, descripcion) VALUES (?, ?, ?, ?, ?)";
@@ -30,9 +25,7 @@ function crearSolicitud({ tipo, nombre, correo, asunto, descripcion }) {
     });
 }
 
-/**
- * Eliminar una solicitud por su ID
- */
+
 function eliminarSolicitud(id) {
     return new Promise((resolve, reject) => {
         const sql = "DELETE FROM solicitudes WHERE id = ?";
