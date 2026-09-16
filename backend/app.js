@@ -17,6 +17,15 @@ db.serialize(() => {
         estado TEXT DEFAULT 'Pendiente',
         fecha DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS usuarios (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        apellido TEXT NOT NULL,
+        correo TEXT NOT NULL UNIQUE,
+        contrasenia TEXT NOT NULL,
+        rol TEXT DEFAULT 'Usuario'
+    )`);
 });
 
 app.use(cors());
@@ -29,7 +38,7 @@ app.get("/", (req, res) => {
     res.sendFile(
         path.join(__dirname, "../frontend/inicio-sesion/inicio-sesion.html")
     );
-});
+}); 
 
 app.post("/autentificacion", (req, res) => {
     const { usuario, contrasenia } = req.body;
@@ -85,6 +94,103 @@ app.delete("/api/solicitudes/:id", (req, res) => {
         }
         res.json({ status: true, message: "Solicitud eliminada exitosamente", changes: this.changes });
     });
+});
+
+//Gestion de usuarios
+
+app.get("/usuarios", (req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend/usuarios/usuarios.html"))
+})
+
+app.get("/api/listar-usuarios", (req, res)=>{
+    db.all("SELECT id, nombre, apellido,correo, contrasenia, rol FROM usuarios",[],(err,rows)=>{
+        if (err) {
+            return res.status(500).json({
+                error: err.message
+            })
+        }
+        res.json(rows)
+    })
+})
+
+app.post("/api/crear-usuario", (req, res)=>{
+    const {nombre, apellido, correo, contrasenia, rol } = req.body
+    if (!nombre, !apellido, !correo, !contrasenia) {
+        return res.status(400).json({
+            status:false,
+            menssage: "Nombre, apellido, correo y contraseña son obligatorios"
+        })
+    }
+    db.run(`INSERT INTO usuarios (nombre, apellido, correo, contrasenia, rol)
+        VALUES (?,?,?,?,?)`,
+        [nombre, apellido, correo, contrasenia, rol],
+        function (err) {
+            if (err) {
+                if (err.message.includes("UNIQUE")) {
+                    return res.status(400).json({
+                        status: false,
+                        menssage: "El correo ya está registrado"
+                    })
+                }
+                return res.status(500).json({
+                    status: false,
+                    error: err.message
+                })
+            }
+            res.status(201).json({
+                status: true,
+                menssage: "Usuario creado"
+            })
+                
+        } 
+
+    )
+});
+
+app.put("/api/actualizar-usuario/:id", (req, res)=>{
+    const { id } = req.params 
+    const {nombre, apellido, correo, contrasenia, rol } = req.body
+    db.run(`UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, contrasenia = ?,
+            rol = ? WHERE id = ?`, [nombre, apellido, correo, contrasenia, rol, id],
+        function (err){
+            if (err) {
+                return res.status(500).json({
+                        error: err.message
+                })
+            }
+            res.json({
+                status: true,
+                menssage: "Usuario actualizado"
+            })
+        }
+    ) 
+})
+
+app.get("/api/listar-usuarios/:id", (req, res) => {
+    const { id } = req.params;
+    db.get(
+        `SELECT id, nombre, apellido, correo, contrasenia,rol
+         FROM usuarios
+         WHERE id = ?`,
+        [id],
+        (err, usuario) => {
+
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    message: err.message
+                });
+            }
+            if (!usuario) {
+                return res.status(404).json({
+                    status: false,
+                    message: "Usuario no encontrado"
+                });
+            }
+            res.json(usuario);
+        }
+    );
+
 });
 
 app.listen(3000, () => {
