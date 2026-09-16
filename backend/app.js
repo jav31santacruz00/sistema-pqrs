@@ -2,21 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-// Importar la capa de servicios
 const solicitudesService = require('./services/solicitudesService');
 const usuariosService = require('./services/usuariosService');
 
 const app = express();
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend')));
-
-// ==========================================
-// Rutas de Vistas (HTML)
-// ==========================================
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/inicio-sesion/inicio-sesion.html'));
@@ -38,10 +32,6 @@ app.get('/usuarios', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/usuarios/usuarios.html'));
 });
 
-// ==========================================
-// Autenticación
-// ==========================================
-
 app.post('/autentificacion', (req, res) => {
     const { usuario, contrasenia } = req.body;
 
@@ -51,10 +41,6 @@ app.post('/autentificacion', (req, res) => {
         res.status(401).json({ status: false, message: 'Usuario y/o contraseña incorrecta.' });
     }
 });
-
-// ==========================================
-// API - Solicitudes
-// ==========================================
 
 app.get('/api/solicitudes', async (req, res) => {
     try {
@@ -98,10 +84,6 @@ app.delete('/api/solicitudes/:id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
-// ==========================================
-// API - Gestión de Usuarios
-// ==========================================
 
 app.get('/api/listar-usuarios', async (req, res) => {
     try {
@@ -249,10 +231,6 @@ app.delete('/api/usuarios/:id', async (req, res) => {
         });
     }
 });
-
-// ==========================================
-// Inicialización del Servidor
-// ==========================================
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

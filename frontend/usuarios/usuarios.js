@@ -2,9 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     listarUsuarios();
 });
 
-/**
- * Mostrar alertas dinámicas de Bootstrap
- */
+
 function mostrarAlerta(tipo, mensaje, contenedorId = "alerta-mensaje") {
     const contenedor = document.getElementById(contenedorId);
     if (!contenedor) return;
@@ -17,7 +15,6 @@ function mostrarAlerta(tipo, mensaje, contenedorId = "alerta-mensaje") {
         </div>
     `;
 
-    // Si es alerta principal, se auto-cierra después de 4 segundos
     if (contenedorId === "alerta-mensaje") {
         setTimeout(() => {
             contenedor.innerHTML = "";
@@ -25,17 +22,11 @@ function mostrarAlerta(tipo, mensaje, contenedorId = "alerta-mensaje") {
     }
 }
 
-/**
- * Validar formato básico de correo electrónico
- */
 function esCorreoValido(correo) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(correo);
 }
 
-/**
- * Listar todos los usuarios en la tabla
- */
 async function listarUsuarios() {
     const tabla = document.getElementById("tabla-usuarios");
     try {
@@ -92,9 +83,6 @@ async function listarUsuarios() {
     }
 }
 
-/**
- * Crear un nuevo usuario con validaciones y alertas
- */
 async function crearUsuario() {
     const nombre = document.getElementById("nombre").value.trim();
     const apellido = document.getElementById("apellido").value.trim();
@@ -159,9 +147,6 @@ async function crearUsuario() {
     }
 }
 
-/**
- * Abrir modal para actualizar usuario
- */
 async function abrirModalActualizar(id) {
     const alertaModal = document.getElementById("alerta-modal-actualizar");
     if (alertaModal) alertaModal.innerHTML = "";
@@ -192,9 +177,6 @@ async function abrirModalActualizar(id) {
     }
 }
 
-/**
- * Actualizar usuario con validaciones y alertas
- */
 async function actualizarUsuario() {
     const id = document.getElementById("idActualizar").value;
     const nombre = document.getElementById("nombreActualizar").value.trim();
@@ -254,9 +236,6 @@ async function actualizarUsuario() {
     }
 }
 
-/**
- * Eliminar un usuario con confirmación y alertas
- */
 async function eliminarUsuario(id, nombreCompleto) {
     const mensajeConfirm = nombreCompleto
         ? `¿Está seguro de que desea eliminar al usuario "${nombreCompleto}"?`

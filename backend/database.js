@@ -10,7 +10,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
-// Inicialización de tablas si no existen
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS solicitudes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
